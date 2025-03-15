@@ -1,12 +1,21 @@
 const express = require("express");
-const path = require("path");
+const cors = require("cors");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-// Serve static files from the "public" folder
-app.use(express.static(path.join(__dirname, "public")));
+// Middlewares
+app.use(cors()); // Enables Cross-Origin Resource Sharing
+app.use(express.json()); // Parses incoming JSON requests
 
-app.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
+// Sample API route
+app.post("/data", (req, res) => {
+    console.log(req.body); // Log the JSON data from the request
+    res.json({ message: "Data received successfully!", receivedData: req.body });
 });
+
+// Start server
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`✅ Server running at http://localhost:${PORT}`);
+});
+
